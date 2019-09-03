@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="50dp"
+    tools:context=".CropdeseasDetails">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/deases_detailsTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:src="@drawable/fruite"
+            android:text="@string/deasesclick"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/cd_detailsIv"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:src="@drawable/fruite"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cd_detailsTv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="this is Text Viewsjfawejfoewjfoawhfiawehfaejfoaiwhfioawehfaihigahgiahaewiufhaiufhaiufhiahgiawghaiewrghiarehgierhgiaeughiaeurhgiaeruhiehigerhgieruhgierghierhgieureiuhgiuerhgiuerhgierhgierhgiuerhiuehiuashaiheriahfighgier"
+            android:layout_margin="10dp"/>
+    </androidx.cardview.widget.CardView>
+
+
+<!--    <LinearLayout-->
+<!--       android:layout_width="match_parent"-->
+<!--       android:layout_height="wrap_content"-->
+<!--       android:layout_margin="10dp"-->
+<!--       android:orientation="vertical">-->
+<!--       <ImageView-->
+<!--           android:id="@+id/cd_detailsIv"-->
+<!--           android:layout_width="wrap_content"-->
+<!--           android:layout_height="300dp"-->
+<!--           android:src="@drawable/fruite"-->
+<!--       />-->
+<!--       <TextView-->
+<!--           android:id="@+id/cd_detailsTv"-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:layout_height="match_parent"-->
+<!--           android:text="this is Text View"-->
+<!--           android:layout_marginLeft="10dp"/>-->
+<!--   </LinearLayout>-->
+
+</LinearLayout>

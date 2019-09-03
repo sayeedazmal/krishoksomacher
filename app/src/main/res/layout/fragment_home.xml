@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Home"
+    android:background="#FFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/cropbtn"
+            android:layout_width="171dp"
+            android:layout_height="163dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/crop"
+            android:padding="20sp"
+            android:text="@string/cropdises"
+            android:textColor="#FFFF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/signshap"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp">
+
+            <ImageButton
+                android:id="@+id/btncamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/drawfab"
+                android:layout_marginLeft="5dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="60dp"
+                android:maxHeight="60dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_menu_camera" />
+
+            <TextView
+                android:id="@+id/tvSearchCaption"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="@string/discamera"
+                android:textColor="#FFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

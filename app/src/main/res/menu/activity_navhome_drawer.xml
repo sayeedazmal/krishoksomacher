@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/person_24dp"
+            android:title="@string/menu_info" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/info"
+            android:title="@string/menu_about" />
+        <item
+            android:id="@+id/nav_use"
+            android:icon="@drawable/clickhand"
+            android:title="@string/menu_use" />
+        <item
+            android:id="@+id/nav_careful"
+            android:icon="@drawable/email_24dp"
+            android:title="@string/menu_careful" />
+        <item
+            android:id="@+id/nav_ask"
+            android:icon="@drawable/questionmark"
+            android:title="@string/menu_ask" />
+        <item
+            android:id="@+id/nav_communication"
+            android:icon="@drawable/phone"
+            android:title="@string/menu_communication" />
+    </group>
+
+    <item android:title="more">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/lock_24dp"
+                android:title="@string/menu_login" />
+            <item
+                android:id="@+id/nav_rating"
+                android:icon="@drawable/star_24dp"
+                android:title="@string/menu_rating" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_share" />
+            <item
+                android:id="@+id/nav_out"
+                android:icon="@drawable/ic_settings_power_black_24dp"
+                android:title="@string/menu_out" />
+
+        </menu>
+    </item>
+
+</menu>
