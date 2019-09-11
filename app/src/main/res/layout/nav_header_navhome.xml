@@ -39,7 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/nav_header_subtitle"
+        android:textColor="#ffff"
         android:textStyle="bold"
-        android:textSize="15sp"/>
+        android:textSize="12sp"/>
 
 </LinearLayout>

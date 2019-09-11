@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">কৃষকের জানালা</string>
-    <string name="nav_header_subtitle">হাসি ফুটুক সকল কৃষকের</string>
+    <string name="nav_header_subtitle">আপনার ফসলের সমস্যার সমাধান এখানেই</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="menu_home">নীড় পাতা </string>
@@ -21,10 +21,6 @@
     <string name="cropdises">ফসলের রোগসমূহ</string>
     <string name="discamera">যাচাই করুন</string>
 
-    <string name="description_flower_rose">A rose is a woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears. There are over a hundred species and thousands of cultivars.</string>
-    <string name="description_flower_carnation">Dianthus caryophyllus, the carnation or clove pink, is a species of Dianthus. It is probably native to the Mediterranean region but its exact range is unknown due to extensive cultivation for the last 2,000 years.</string>
-    <string name="description_flower_tulip">Tulips form a genus of spring-blooming perennial herbaceous bulbiferous geophytes. The flowers are usually large, showy and brightly coloured, generally red yellow or white.</string>
-    <string name="description_flower_daisy">Bellis perennis is a common European species of daisy, of the Asteraceae family, often considered the archetypal species of that name.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
