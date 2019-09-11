@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentManager;
 import android.view.Menu;
+import android.webkit.WebChromeClient;
 import android.widget.Button;
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class Navhome extends AppCompatActivity implements NavigationView.OnNavig
 
     private File imageFile = null;
     private String filePath;
+    File photoFile;
 
 
 
@@ -77,25 +79,43 @@ public class Navhome extends AppCompatActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View view) {
 
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(Navhome.this.getPackageManager())
-                        != null){
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(Navhome.this.getPackageManager()) != null) {
+                    photoFile = null;
                     try {
-                        imageFile = createImageFile();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
+                    if (photoFile != null) {
 
-                    if(imageFile != null){
-                        Uri fileUri = FileProvider.getUriForFile(Navhome.this,
-                                "com.example.krishoksomachar",
-                                imageFile);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                        Uri fileUri = FileProvider.getUriForFile(Navhome.this,"com.example.krishoksomachar",photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+
                     }
-
                 }
+
+
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                if(intent.resolveActivity(Navhome.this.getPackageManager())
+//                        != null){
+//                    try {
+//                        imageFile = createImageFile();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    if(imageFile != null){
+//                        Uri fileUri = FileProvider.getUriForFile(Navhome.this,
+//                                "com.example.krishoksomachar",
+//                                imageFile);
+//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+//                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+//                    }
+//
+//                }
             }
 
 
@@ -118,9 +138,10 @@ public class Navhome extends AppCompatActivity implements NavigationView.OnNavig
         if(requestCode == REQUEST_IMAGE_CAPTURE &&
                 resultCode == Activity.RESULT_OK){
 
+                galleryAddPic();
             final StorageReference rootRef =
                     FirebaseStorage.getInstance().getReference();
-            Uri fileUri = Uri.fromFile(imageFile);
+            Uri fileUri = Uri.fromFile(photoFile);
             final StorageReference photoRef =
                     rootRef.child("images/"+fileUri.getLastPathSegment());
 
@@ -159,14 +180,37 @@ public class Navhome extends AppCompatActivity implements NavigationView.OnNavig
         return true;
     }
 
-    private File createImageFile()  throws IOException{
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_hhmmss").format(new Date());
-        String imageFileName = "JPEG_"+timeStamp;
-        File dir = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File file = File.createTempFile(imageFileName, ".jpg", dir);
-        filePath = file.getAbsolutePath();
-        return file;
+//    private File createImageFile()  throws IOException{
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_hhmmss").format(new Date());
+//        String imageFileName = "JPEG_"+timeStamp;
+//        File dir = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File file = File.createTempFile(imageFileName, ".jpg", dir);
+//        filePath = file.getAbsolutePath();
+//        return file;
+//    }
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        File storageDir = Environment.getExternalStorageDirectory();
+        File image = File.createTempFile(
+                "example",  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
+
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
 
 //Navigation work
     @Override
