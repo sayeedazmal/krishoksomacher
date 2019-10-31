@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ public class CropdeseasDetails extends Fragment {
     }
 
 
+
     public CropdeseasDetails(String desname){
         this.desname = desname;
     }
@@ -29,6 +32,7 @@ public class CropdeseasDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
          View view = inflater.inflate(R.layout.fragment_cropdeseas_details, container, false);
 
         TextView textView = view.findViewById(R.id.deases_detailsTv);

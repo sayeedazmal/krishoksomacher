@@ -1,10 +1,9 @@
-package com.example.krishoksomachar;
+package com.example.krishoksomachar.AllAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.krishoksomachar.Pojoclass.DeasesData;
+import com.example.krishoksomachar.R;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class DeasesAdapter extends RecyclerView.Adapter<DeasesAdapter.deasesViewholder> {
 
@@ -67,7 +66,7 @@ public class DeasesAdapter extends RecyclerView.Adapter<DeasesAdapter.deasesView
         }
     }
 
-    interface ondeasesClick{
+   public interface ondeasesClick{
         void onauthdeases(int position,String deasesname);
     }
 }

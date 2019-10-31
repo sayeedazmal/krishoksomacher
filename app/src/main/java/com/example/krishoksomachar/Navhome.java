@@ -62,7 +62,6 @@
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             manager = getSupportFragmentManager();
-
             fragment = new Cropdetails();
             if (fragment != null) {
                 manager.beginTransaction().replace(R.id.content_fragment, fragment).commit();
@@ -103,7 +102,7 @@
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-
+        // Camera  image upload to Firbase Storage.
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -135,6 +134,7 @@
             }
         }
 
+        // Camer take Permission Code.
 
         private boolean checkStoragePermission(){
             if(ActivityCompat.checkSelfPermission(this,
@@ -163,7 +163,7 @@
             return image;
         }
 
-
+        //Gallery add picture
         private void galleryAddPic() {
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             File f = new File(mCurrentPhotoPath);
@@ -184,23 +184,23 @@
             }
         }
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-
-            getMenuInflater().inflate(R.menu.navhome, menu);
-            return true;
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-
-            if (id == R.id.search) {
-                Toast.makeText(this,"search",Toast.LENGTH_LONG).show();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
+//        @Override
+//        public boolean onCreateOptionsMenu(Menu menu) {
+//
+//            getMenuInflater().inflate(R.menu.search, menu);
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem item) {
+//            int id = item.getItemId();
+//
+//            if (id == R.id.search) {
+//                Toast.makeText(this,"search",Toast.LENGTH_LONG).show();
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(item);
+//        }
 
 
         @Override

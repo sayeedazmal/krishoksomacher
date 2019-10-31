@@ -1,18 +1,24 @@
 package com.example.krishoksomachar;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.krishoksomachar.AllAdapter.CropdetailsAdapter;
 import com.example.krishoksomachar.Pojoclass.Cropdetailsdata;
 
 import java.util.ArrayList;
@@ -27,9 +33,11 @@ public class Cropdetails extends Fragment implements CropdetailsAdapter.onImageC
     private Context context;
     private Cropdetailsinterface crpdListener;
 
+
     public Cropdetails() {
 
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -81,6 +89,11 @@ public class Cropdetails extends Fragment implements CropdetailsAdapter.onImageC
 
         }
     }
+
+
+
+
+
     interface Cropdetailsinterface{
         void oncropdetails();
     }
