@@ -3,8 +3,10 @@
     import android.Manifest;
     import android.app.Activity;
     import android.content.Context;
+    import android.content.DialogInterface;
     import android.content.Intent;
     import android.content.pm.PackageManager;
+    import android.database.Cursor;
     import android.net.Uri;
     import android.os.Bundle;
 
@@ -17,6 +19,7 @@
     import android.view.View;
 
     import androidx.annotation.NonNull;
+    import androidx.appcompat.app.AlertDialog;
     import androidx.core.app.ActivityCompat;
     import androidx.core.content.FileProvider;
     import androidx.core.view.GravityCompat;
@@ -72,6 +75,53 @@
                 @Override
                 public void onClick(View view) {
 
+//                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    if (takePictureIntent.resolveActivity(Navhome.this.getPackageManager()) != null) {
+//                        photoFile = null;
+//                        try {
+//                            photoFile = createImageFile();
+//                        } catch (IOException ex) {
+//                            ex.printStackTrace();
+//                        }
+//                        if (photoFile != null) {
+//
+//                            Uri fileUri = FileProvider.getUriForFile(Navhome.this, "com.example.krishoksomachar", photoFile);
+//                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+//                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//
+//
+//                        }
+//                    }
+
+                    selectImage(Navhome.this);
+
+                }
+
+            });
+
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+            navigationView.setNavigationItemSelectedListener(this);
+        }
+
+        // select gallery image or take photo
+
+        private void selectImage(Context context) {
+            final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Choose your profile picture");
+
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+
+                    if (options[item].equals("Take Photo")) {
+
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (takePictureIntent.resolveActivity(Navhome.this.getPackageManager()) != null) {
                         photoFile = null;
@@ -86,53 +136,92 @@
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
-
                         }
                     }
+                } else if (options[item].equals("Choose from Gallery")) {
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(pickPhoto , 2);
 
+                } else if (options[item].equals("Cancel")) {
+                        dialog.dismiss();
+                    }
                 }
-
             });
-
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            NavigationView navigationView = findViewById(R.id.nav_view);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-            navigationView.setNavigationItemSelectedListener(this);
+            builder.show();
         }
 
-        // Camera  image upload to Firbase Storage.
+
+
+            // Camera  image upload to Firbase Storage.
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
 
-                galleryAddPic();
 
-                final StorageReference rootRef = FirebaseStorage.getInstance().getReference();
-                Uri fileUri = Uri.fromFile(photoFile);
-                final StorageReference photoRef = rootRef.child("images/"+fileUri.getLastPathSegment());
+                switch (requestCode){
+                    case 1:
+                        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+                            galleryAddPic();
+                            Intent intent = new Intent(Navhome.this, Justifydeases.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("pohotopath",photoFile.getAbsolutePath());
+                            bundle.putInt("request_code",requestCode);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            final StorageReference rootRef = FirebaseStorage.getInstance().getReference();
+                            Uri fileUri = Uri.fromFile(photoFile);
+                            final StorageReference photoRef = rootRef.child("images/" + fileUri.getLastPathSegment());
 
-                UploadTask uploadTask = photoRef.putFile(fileUri);
-                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if(!task.isSuccessful()){
-                            throw task.getException();
+                            UploadTask uploadTask = photoRef.putFile(fileUri);
+                            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                    if (!task.isSuccessful()) {
+                                        throw task.getException();
+                                    }
+                                    return photoRef.getDownloadUrl();
+                                }
+                            });
+                            uriTask.addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    Uri downloadUri = task.getResult();
+
+                                }
+                            });
+                     }
+                    break;
+
+                    case 2:
+                        if (resultCode == RESULT_OK && data != null) {
+                            Uri selectedImage =  data.getData();
+                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                            if (selectedImage != null) {
+                                Cursor cursor = getContentResolver().query(selectedImage,
+                                        filePathColumn, null, null, null);
+                                if (cursor != null) {
+                                    cursor.moveToFirst();
+
+                                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                    String picturePath = cursor.getString(columnIndex);
+                                    Intent picturepathIntent = new Intent(this,Justifydeases.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("imagecapture",picturePath);
+                                    picturepathIntent.putExtras(bundle);
+                                    startActivity(picturepathIntent);
+
+                                    // imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                    cursor.close();
+                                }
+                            }
+
                         }
-                        return photoRef.getDownloadUrl();
-                    }
-                });
-                uriTask.addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        Uri downloadUri = task.getResult();
 
-                    }
-                });
+                    break;
+                }
+
             }
-        }
+
 
         // Camer take Permission Code.
 
@@ -183,25 +272,6 @@
                 super.onBackPressed();
             }
         }
-
-//        @Override
-//        public boolean onCreateOptionsMenu(Menu menu) {
-//
-//            getMenuInflater().inflate(R.menu.search, menu);
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            int id = item.getItemId();
-//
-//            if (id == R.id.search) {
-//                Toast.makeText(this,"search",Toast.LENGTH_LONG).show();
-//                return true;
-//            }
-//            return super.onOptionsItemSelected(item);
-//        }
-
 
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {

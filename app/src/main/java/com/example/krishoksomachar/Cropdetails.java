@@ -75,7 +75,6 @@ public class Cropdetails extends Fragment implements CropdetailsAdapter.onImageC
     public void onAuthClick(int position) {
         switch (position){
             case 0:
-                Toast.makeText(getActivity(), "Array ["+position+"]", Toast.LENGTH_SHORT).show();
                 crpdListener.oncropdetails();
                 break;
             case 1:  break;
